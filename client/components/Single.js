@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 
 class Single extends React.Component {
   render() {
+    const { post } = this.props;
     return (
       <div className="single-photo">
-        Single here!
-        <div>
-          <Link to="/">Go to grid</Link>
-        </div>
+        { post.caption }
       </div>
     );
   }
 };
 
 function mapStateToProps(state, props) {
-  return {};
+  return {
+    post: state.posts.find(p => p.id === props.match.params.id)
+  };
 }
 
 export default connect(mapStateToProps)(Single);

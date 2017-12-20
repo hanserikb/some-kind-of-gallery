@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom';
+import { Route, Router, Link, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-//import { history } from '../store';
+import { ConnectedRouter } from 'react-router-redux';
+import { history } from '../store';
 import Single from './Single';
 import PhotoGrid from './PhotoGrid';
 
@@ -10,7 +11,7 @@ class Main extends React.Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <Router>
+        <ConnectedRouter history={history}>
           <div>
             <h1>
               <Link to="/">Foostagram</Link>
@@ -18,7 +19,7 @@ class Main extends React.Component {
               <Route exact path="/" component={PhotoGrid} />
               <Route path="/view/:id" component={Single} />
           </div>
-        </Router>
+        </ConnectedRouter>
       </Provider>
     );
   }
