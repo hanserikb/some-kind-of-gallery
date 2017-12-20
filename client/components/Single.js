@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 class Single extends React.Component {
   render() {
     return (
@@ -13,4 +15,8 @@ class Single extends React.Component {
   }
 };
 
-export default Single;
+function mapStateToProps(state, props) {
+  return {};
+}
+
+export default connect(mapStateToProps)(Single);
