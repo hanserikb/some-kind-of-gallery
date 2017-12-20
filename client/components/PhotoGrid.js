@@ -3,11 +3,22 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 class PhotoGrid extends React.Component {
   render() {
-    const { posts } = this.props;
+    const { posts, comments } = this.props;
+
+    function getCommentLength(post) {
+      return comments[post.code] && comments[post.code].length || 0;
+    }
+
     return (
       <div className="photo-grid">
-        { posts.map(p => p.caption) }
-        <div><Link to="/view/3">Go to single</Link></div>
+        { posts.map(p => (
+          <Link className="grid-figure" to={`view/${p.id}`} key={p.id}>
+            <div className="grid-photo-wrap">
+              <img src={p.display_src} alt=""/>
+            </div>
+            { getCommentLength(p) } comments
+          </Link>
+        )) }
       </div>
     );
   }
@@ -15,7 +26,8 @@ class PhotoGrid extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: state.posts,
+    comments: state.comments
   };
 };
 
