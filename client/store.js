@@ -4,7 +4,7 @@ import createHistory from 'history/createBrowserHistory';
 import comments from './data/comments';
 import posts from './data/posts';
 import postReducer from './reducers/posts';
-import commentsReducer from './reducers/posts';
+import commentReducer from './reducers/comments';
 
 const browserHistory = createHistory();
 
@@ -19,7 +19,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     combineReducers({
     router: routerReducer,
-    comments: commentsReducer,
+    comments: commentReducer,
     posts: postReducer,
   }), defaultState, composeEnhancers(
     applyMiddleware(middleware)

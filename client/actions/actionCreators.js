@@ -6,28 +6,28 @@ function addPost() {
   }
 }
 
-function removePost(index) {
+function removePost(id) {
   return {
     type: REMOVE_POST,
     payload: {
-      index
+      id
     }
   }
 }
 
-function incrementLikes(index) {
+function incrementLikes(id) {
   return {
     type: INCREMENT_LIKES,
     payload: {
-      index
+      id
     }
   }
 }
 
-function decrementLikes(index) {
+function decrementLikes(id) {
   return {
     type: DECREMENT_LIKES,
-    payoad: index
+    payoad: id
   }
 }
 
@@ -45,7 +45,7 @@ function removeComment() {
   return {
     type: REMOVE_COMMENT,
     payload: {
-      index
+      id
     }
   }
 }

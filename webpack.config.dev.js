@@ -24,7 +24,7 @@ module.exports = {
       loader: 'babel',
       include: path.join(__dirname, 'client'),
       query: {
-        presets: ['es2015', 'react']
+        presets: ['stage-2', 'es2015', 'react']
       }
     },
     // CSS

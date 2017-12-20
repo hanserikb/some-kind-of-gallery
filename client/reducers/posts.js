@@ -1,7 +1,7 @@
-import { ADD_POST, REMOVE_POST } from '../actions/actions';
+import { ADD_POST, REMOVE_POST, INCREMENT_LIKES } from '../actions/actions';
 
-const PostsReducer = (state = [], action) => {
-  switch (action) {
+const PostReducer = (state = [], action) => {
+  switch (action.type) {
     case ADD_POST:
       return [
         ...state,
@@ -10,10 +10,15 @@ const PostsReducer = (state = [], action) => {
         }
       ];
     case REMOVE_POST:
-      return state.filter((p, i) => i !== action.payload.index);
+      return state.filter((p, i) => i !== action.payload.id);
+    case INCREMENT_LIKES:
+      return state.map(post => ({
+        ...post,
+        likes: post.id === action.payload.id ? post.likes + 1 : post.likes
+      }));
     default:
       return state
   }
 };
 
-export default PostsReducer;
+export default PostReducer;
