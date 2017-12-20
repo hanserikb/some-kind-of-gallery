@@ -9,8 +9,13 @@ class Comments extends React.Component {
   }
 
   submitComment(e) {
-    console.log(this.authorRef.value, this.commentRef.value);
     e.preventDefault();
+    const author = this.authorRef.value;
+    const comment = this.commentRef.value;
+    this.props.onSubmit(
+      author,
+      comment
+    )
   }
 
   removeComment() {
@@ -42,5 +47,7 @@ class Comments extends React.Component {
     );
   }
 }
+
+
 
 export default Comments;

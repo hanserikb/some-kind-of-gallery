@@ -1,13 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { incrementLikes } from '../actions/actionCreators';
+import { incrementLikes, addComment } from '../actions/actionCreators';
 import Photo from './Photo';
 import Comments from './Comments';
 
 class Single extends React.Component {
   constructor() {
     super();
+
+    this.submitComment = this.submitComment.bind(this);
+  }
+
+  submitComment(author, comment) {
+    this.props.addComment(
+      this.props.post.code,
+      author,
+      comment
+    )
   }
 
   render() {
@@ -16,7 +26,7 @@ class Single extends React.Component {
     return (
       <div className="single-photo">
         <Photo comments={postComments} photo={post} />
-        <Comments comments={postComments} />
+        <Comments onSubmit={this.submitComment} comments={postComments} />
       </div>
     );
   }
@@ -29,4 +39,16 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(Single);
+function mapDispatchToProps(dispatch) {
+  return {
+    addComment: (code, author, comment) => {
+      dispatch(addComment(
+        code,
+        author,
+        comment
+      ))
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Single);

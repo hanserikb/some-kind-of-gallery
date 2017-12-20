@@ -31,10 +31,11 @@ function decrementLikes(id) {
   }
 }
 
-function addComment(postId, author, comment) {
+function addComment(code, author, comment) {
   return {
     type: ADD_COMMENT,
     payload: {
+      code,
       author,
       comment
     }
