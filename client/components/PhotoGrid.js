@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Photo from './Photo';
 class PhotoGrid extends React.Component {
   render() {
     const { posts, comments } = this.props;
@@ -11,14 +12,7 @@ class PhotoGrid extends React.Component {
 
     return (
       <div className="photo-grid">
-        { posts.map(p => (
-          <Link className="grid-figure" to={`view/${p.id}`} key={p.id}>
-            <div className="grid-photo-wrap">
-              <img src={p.display_src} alt=""/>
-            </div>
-            { getCommentLength(p) } comments
-          </Link>
-        )) }
+        { posts.map(p => (<Photo photo={p} key={p.id} />)) }
       </div>
     );
   }
