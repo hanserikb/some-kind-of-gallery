@@ -42,11 +42,12 @@ function addComment(code, author, comment) {
   }
 }
 
-function removeComment() {
+function removeComment(code, index) {
   return {
     type: REMOVE_COMMENT,
     payload: {
-      id
+      code,
+      index
     }
   }
 }

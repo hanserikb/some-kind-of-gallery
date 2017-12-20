@@ -16,10 +16,13 @@ class Comments extends React.Component {
       author,
       comment
     )
+
+    this.authorRef.value = '';
+    this.commentRef.value = '';
   }
 
-  removeComment() {
-
+  removeComment(index) {
+    this.props.removeComment(index)
   }
 
   render() {
@@ -30,7 +33,7 @@ class Comments extends React.Component {
         <p>
           <strong>{comment.user}</strong>
           {comment.text}
-          <button className="remove-comment">&times;</button>
+          <button className="remove-comment" onClick={() => this.removeComment(index)} >&times;</button>
         </p>
       </div>
     );

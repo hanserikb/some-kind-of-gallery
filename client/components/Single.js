@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { incrementLikes, addComment } from '../actions/actionCreators';
+import { incrementLikes, addComment, removeComment } from '../actions/actionCreators';
 import Photo from './Photo';
 import Comments from './Comments';
 
@@ -10,6 +10,7 @@ class Single extends React.Component {
     super();
 
     this.submitComment = this.submitComment.bind(this);
+    this.removeComment = this.removeComment.bind(this);
   }
 
   submitComment(author, comment) {
@@ -20,13 +21,20 @@ class Single extends React.Component {
     )
   }
 
+  removeComment(index) {
+    this.props.removeComment(
+      this.props.post.code,
+      index
+    )
+  }
+
   render() {
     const { post, incrementLike, comments } = this.props;
     const postComments = comments[post.code] || [];
     return (
       <div className="single-photo">
         <Photo comments={postComments} photo={post} />
-        <Comments onSubmit={this.submitComment} comments={postComments} />
+        <Comments removeComment={this.removeComment} onSubmit={this.submitComment} comments={postComments} />
       </div>
     );
   }
@@ -47,6 +55,12 @@ function mapDispatchToProps(dispatch) {
         author,
         comment
       ))
+    },
+    removeComment: (code, index) => {
+      dispatch(removeComment(
+        code,
+        index
+      ));
     }
   };
 }
