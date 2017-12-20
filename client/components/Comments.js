@@ -2,6 +2,21 @@ import React from 'react';
 
 class Comments extends React.Component {
 
+  constructor() {
+    super();
+    this.submitComment = this.submitComment.bind(this);
+    this.removeComment = this.removeComment.bind(this);
+  }
+
+  submitComment(e) {
+    console.log(this.authorRef.value, this.commentRef.value);
+    e.preventDefault();
+  }
+
+  removeComment() {
+
+  }
+
   render() {
     const { comments } = this.props;
 
@@ -18,6 +33,11 @@ class Comments extends React.Component {
     return (
       <div className="comments">
         { comments.map(Comment) }
+        <form onSubmit={this.submitComment} className="comment-form">
+          <input ref={i => this.authorRef = i} type="text" placeholder="Author"/>
+          <input ref={i => this.commentRef = i} type="text" placeholder="Comment" />
+          <input type="submit" hidden/>
+        </form>
       </div>
     );
   }
