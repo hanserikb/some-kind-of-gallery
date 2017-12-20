@@ -5,11 +5,19 @@ class Comments extends React.Component {
   render() {
     const { comments } = this.props;
 
+    const Comment = (comment, index) => (
+      <div key={index} className="comment">
+        <p>
+          <strong>{comment.user}</strong>
+          {comment.text}
+          <button className="remove-comment">&times;</button>
+        </p>
+      </div>
+    );
+
     return (
       <div className="comments">
-        { comments.map((c, i) => (
-          <div key={i} className="comment">{c.text} <span className="remove-comment">X</span></div>
-        )) }
+        { comments.map(Comment) }
       </div>
     );
   }
