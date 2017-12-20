@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { incrementLikes } from '../actions/actionCreators';
+import Photo from './Photo';
+import Comments from './Comments';
 
 class Single extends React.Component {
   constructor() {
@@ -9,11 +11,12 @@ class Single extends React.Component {
   }
 
   render() {
-    console.log('rendering');
-    const { post, incrementLike } = this.props;
+    const { post, incrementLike, comments } = this.props;
+    const postComments = comments[post.code] || [];
     return (
       <div className="single-photo">
-        { post.caption } { post.id } <button onClick={() => incrementLike(post.id)}>{post.likes}</button>
+        <Photo comments={postComments} photo={post} />
+        <Comments comments={postComments} />
       </div>
     );
   }
@@ -21,16 +24,9 @@ class Single extends React.Component {
 
 function mapStateToProps(state, props) {
   return {
-    post: state.posts.find(p => p.id === props.match.params.id)
+    post: state.posts.find(p => p.id === props.match.params.id),
+    comments: state.comments
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    incrementLike: function(id) {
-      dispatch(incrementLikes(id))
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Single);
+export default connect(mapStateToProps)(Single);
