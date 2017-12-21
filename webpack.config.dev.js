@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -14,7 +16,13 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      alwaysWriteToDisk: true,
+      template: 'start.html',
+      filename: 'index.html'
+    }),
+    new HtmlWebpackHarddiskPlugin()
   ],
   module: {
     loaders: [
