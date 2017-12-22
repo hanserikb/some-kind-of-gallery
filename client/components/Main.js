@@ -17,7 +17,7 @@ class Main extends React.Component {
               <Link to="/">Foostagram</Link>
             </h1>
               <Route exact path="/" component={PhotoGrid} />
-              <Route path="/view/:id" component={Single} />
+              <Route path="/view/:code" component={Single} />
           </div>
         </ConnectedRouter>
       </Provider>

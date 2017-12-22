@@ -18,7 +18,7 @@ class Photo extends React.Component {
     return (
       <figure className="grid-figure">
         <div className="grid-photo-wrap">
-          <Link to={`view/${photo.id}`}>
+          <Link to={`view/${photo.code}`}>
             <img src={photo.display_src} alt={photo.caption} className="grid-photo"/>
           </Link>
           <span
@@ -28,7 +28,7 @@ class Photo extends React.Component {
           <figcaption>
             <p>{photo.caption}</p>
             <div className="control-buttons">
-              <button onClick={() => this.props.incrementLike(photo.id)} className="likes">&hearts; {photo.likes}</button>
+              <button onClick={() => this.props.incrementLike(photo.key)} className="likes">&hearts; {photo.likes}</button>
               <Link className="button" to={`/view/${photo.id}`}>
                 <span className="comment-count">
                   <span className="speech-bubble"></span>
@@ -43,12 +43,4 @@ class Photo extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    incrementLike: function(id) {
-      dispatch(actionCreators.incrementLikes(id))
-    }
-  };
-}
-
-export default connect(null, mapDispatchToProps)(Photo);
+export default connect()(Photo);

@@ -5,7 +5,6 @@ class Comments extends React.Component {
   constructor() {
     super();
     this.submitComment = this.submitComment.bind(this);
-    this.removeComment = this.removeComment.bind(this);
   }
 
   submitComment(e) {
@@ -21,10 +20,6 @@ class Comments extends React.Component {
     this.commentRef.value = '';
   }
 
-  removeComment(index) {
-    this.props.removeComment(index)
-  }
-
   render() {
     const { comments } = this.props;
 
@@ -33,7 +28,7 @@ class Comments extends React.Component {
         <p>
           <strong>{comment.user}</strong>
           {comment.text}
-          <button className="remove-comment" onClick={() => this.removeComment(index)} >&times;</button>
+          <button className="remove-comment" onClick={this.props.removeComment.bind(null, comment.key)} >&times;</button>
         </p>
       </div>
     );
@@ -50,7 +45,5 @@ class Comments extends React.Component {
     );
   }
 }
-
-
 
 export default Comments;
