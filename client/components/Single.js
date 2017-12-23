@@ -27,36 +27,34 @@ class Single extends React.Component {
     const newComment = {
       user: author,
       text: comment,
-      timestamp: this.props.firebase.database.ServerValue.TIMESTAMP
+      //timestamp: this.props.firebase.database.ServerValue.TIMESTAMP
     };
 
-    return firebase.push(`/comments/${match.params.code}`, newComment);
+    return firebase.push(`/posts/${match.params.code}/comments`, newComment);
   }
 
   removeComment(key) {
     const { firebase, match: { params: { code }} } = this.props;
-    return firebase.remove(`/comments/${code}/${key}`);
+    return firebase.remove(`/posts/${code}/comments/${key}`);
   }
 
-  incrementLike(key) {
+  incrementLike() {
    const { firebase, match: { params: { code }} } = this.props;
     return firebase.database()
       .ref('posts')
-      .child(key)
+      .child(code)
       .child('likes')
       .transaction(likes => likes = (likes || 0) + 1);
   }
 
   render() {
     const { post, incrementLike, comments, match: { params: { code }}  } = this.props;
-    const postPost = post && post.find(p => p.code === code);
-
     return (
       <div className="single-photo">
-        { isLoaded(post, comments) ? (
+        { isLoaded(post) ? (
           <Fragment>
-            <Photo incrementLike={this.incrementLike} comments={comments} photo={postPost} />
-            { isEmpty(comments) ? '' : <Comments removeComment={this.removeComment} onSubmit={this.submitComment} comments={comments} /> }
+            <Photo incrementLike={this.incrementLike} comments={post.comments} photo={post} />
+            { !post.comments ? 'No comments' : <Comments removeComment={this.removeComment} onSubmit={this.submitComment} comments={post.comments} /> }
           </Fragment>
         ) : '..Loading..'
         }
@@ -65,19 +63,22 @@ class Single extends React.Component {
   }
 };
 
+Single.defaultProps = {
+  comments: {},
+  post: {}
+}
+
 
 function mapStateToProps(state, props) {
   return {
-    post: orderedToJS(state.firebase, `posts`),
-    comments: orderedToJS(state.firebase, `comments/${props.match.params.code}`),
+    post: dataToJS(state.firebase, `posts/${props.match.params.code}`),
   };
 }
 
 function subscribeFirebase(props) {
   return [
-    `posts`,
-    `comments/${props.match.params.code}`
-  ]
+    `/posts/${props.match.params.code}`,
+  ];
 }
 
 export default compose(

@@ -31,6 +31,7 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel',
       include: path.join(__dirname, 'client'),
+      exclude: path.join(__dirname, 'client', 'data', 'convert.js'),
       query: {
         presets: ['stage-2', 'es2015', 'react']
       }

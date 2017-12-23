@@ -10,7 +10,8 @@ import {
   isLoaded,
   isEmpty,
   dataToJS,
-  orderedToJS
+  orderedToJS,
+  populatedDataToJS
 } from 'react-redux-firebase'
 
 class PhotoGrid extends React.Component {
@@ -30,14 +31,10 @@ class PhotoGrid extends React.Component {
   }
 
   render() {
-    const { posts, comments } = this.props;
-    function getComments(post) {
-      return comments[post.code] && comments[post.code];
-    }
-
+    const { posts } = this.props;
     return (
       <div className="photo-grid">
-        { (isLoaded(posts) && isLoaded(comments)) ? posts.map(p => (<Photo comments={getComments(p)} photo={p} key={p.key} incrementLike={this.incrementLike} />)) : '...Loading..' }
+        { isLoaded(posts) ? posts.map(p => (<Photo comments={p.comments} photo={p} key={p.key} incrementLike={this.incrementLike} />)) : '...Loading..' }
       </div>
     );
   }
@@ -46,14 +43,12 @@ class PhotoGrid extends React.Component {
 function mapStateToProps(state) {
   return {
     posts: orderedToJS(state.firebase, 'posts'),
-    comments: dataToJS(state.firebase, 'comments'),
   };
 };
 
 function subscribeFirebase() {
   return [
-    'posts',
-    'comments'
+    '/posts',
   ];
 }
 

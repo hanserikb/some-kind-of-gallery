@@ -4,8 +4,6 @@ import { firebaseStateReducer, reduxFirebase } from 'react-redux-firebase';
 
 import firebaseConfig from './firebaseConfig';
 import createHistory from 'history/createBrowserHistory';
-import comments from './data/comments';
-import posts from './data/posts';
 import postReducer from './reducers/posts';
 import commentReducer from './reducers/comments';
 

@@ -2,10 +2,11 @@ import React from 'react';
 
 class Comments extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.submitComment = this.submitComment.bind(this);
   }
+
 
   submitComment(e) {
     e.preventDefault();
@@ -21,7 +22,12 @@ class Comments extends React.Component {
   }
 
   render() {
-    const { comments } = this.props;
+    const comments = Object.keys(this.props.comments).map(k => {
+      return {
+        ...this.props.comments[k],
+        key: k
+      }
+    }).sort((p, c) => p.timestamp > c.timestamp);
 
     const Comment = (comment, index) => (
       <div key={index} className="comment">
@@ -45,5 +51,9 @@ class Comments extends React.Component {
     );
   }
 }
+
+Comments.defaultProps = {
+  comments: {}
+};
 
 export default Comments;
